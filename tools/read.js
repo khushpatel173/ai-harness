@@ -22,10 +22,11 @@ export const readTool = {
 
 const workspace = process.cwd();    
 
-export async function readFile({path}){
+export async function readFile({path : location}){
     try {
-        
-    const fullPath = path.join(workspace, path);
+    console.log(location);
+    const fullPath = path.join(workspace , location);
+    console.log(fullPath);
     const content = await fs.readFile(fullPath, "utf-8");
     return content;
     } catch (error) {

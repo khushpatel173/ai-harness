@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .calculator {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 320px;
+      width: 90%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+    .calculator input, .calculator select, .calculator button {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.2s;
+    }
+    .calculator input:focus, .calculator select:focus {
+      border-color: #3b82f6;
+      outline: none;
+    }
+    .calculator button {
+      background: #3b82f6;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+    }
+    .calculator button:hover {
+      background: #2563eb;
+    }
+    .result {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Simple Calculator</h2>
+    <input type="number" id="num1" placeholder="First number" />
+    <input type="number" id="num2" placeholder="Second number" />
+    <select id="operation">
+      <option value="add">+</option>
+      <option value="subtract">-</option>
+      <option value="multiply">*</option>
+      <option value="divide">/</option>
+    </select>
+    <button id="calculate">Calculate</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById('calculate').addEventListener('click', () => {
+      const a = parseFloat(document.getElementById('num1').value);
+      const b = parseFloat(document.getElementById('num2').value);
+      const op = document.getElementById('operation').value;
+      let res;
+      if (isNaN(a) || isNaN(b)) {
+        res = 'Please enter valid numbers';
+      } else {
+        switch (op) {
+          case 'add': res = a + b; break;
+          case 'subtract': res = a - b; break;
+          case 'multiply': res = a * b; break;
+          case 'divide': res = b !== 0 ? a / b : 'Cannot divide by zero'; break;
+          default: res = 'Unknown operation';
+        }
+      }
+      document.getElementById('result').textContent = `Result: ${res}`;
+    });
+  </script>
+</body>
+</html>

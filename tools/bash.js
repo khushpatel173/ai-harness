@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 import { promisify } from "util";
-
+import path from 'path'
 const execAsync = promisify(exec);
 
 const workspace = process.cwd();
@@ -26,10 +26,10 @@ export const bashTool = {
     }
 }
 
-export async function runCommand({ command, path = "." }) {
+export async function runCommand({ command, path : location = "." }) {
     try {
         const { stdout, stderr } = await execAsync(command, {
-            cwd: path.join(workspace, path)
+            cwd: path.join(workspace, location)
         });
 
         return stdout || stderr;

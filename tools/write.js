@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 
 
@@ -23,13 +23,13 @@ export const writeTool = {
         }
     }
 }
-
- writeFile({path , content}){
+const workspace = process.cwd();
+ export async function writeFile({content , path : location}){
      try {
-        const workspace = process.cwd();
-        const fullPath = path.join(workspace, filePath);
+        
+        const fullPath = path.join(workspace, location);
         await fs.writeFile(fullPath, content, "utf-8");
-        return `Successfully wrote to ${filePath}`;
+        return `Successfully wrote to ${location}`;
     } catch (error) {
         return `Failed to write file: ${error.message}`;
     }
