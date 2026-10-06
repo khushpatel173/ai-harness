@@ -1,11 +1,16 @@
 import readline from "readline";
+import { main } from "../agent/loop.js";
+
+
+
+export const messages = [];
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-function askUser() {
+ function askUser() {
     rl.question("> ", async (input) => {
 
         if (input.trim() === "exit") {
@@ -22,7 +27,14 @@ function askUser() {
 
         // Later:
         // await agent.run(input);
+
+        messages.push({
+            role : "user" , 
+            content : input
+        });
+        console.log(messages);
         
+        await main();
 
         askUser();
     });
