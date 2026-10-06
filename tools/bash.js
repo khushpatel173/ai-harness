@@ -1,3 +1,9 @@
+import { exec } from "child_process";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
+
+const workspace = process.cwd();
 export const bashTool = {
     type: "function",
     function: {
@@ -17,5 +23,17 @@ export const bashTool = {
             },
             required: ["command"]
         }
+    }
+}
+
+export async function runCommand({ command, path = "." }) {
+    try {
+        const { stdout, stderr } = await execAsync(command, {
+            cwd: path.join(workspace, path)
+        });
+
+        return stdout || stderr;
+    } catch (error) {
+        return error.stdout || error.stderr || `Command failed: ${error.message}`;
     }
 }

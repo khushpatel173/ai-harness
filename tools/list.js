@@ -1,3 +1,10 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+
+// Create the async version
+const execFileAsync = promisify(execFile);
+const workspace = process.cwd();
+
 export const listTool = {
     type: "function",
     function: {
@@ -13,5 +20,37 @@ export const listTool = {
             },
             required: []
         }
+    }
+}
+
+
+export async function listFiles({ path = "." }) {
+    try {
+        const { stdout } = await execFileAsync(
+            "find",
+            [
+                path,
+                "-type", "d",
+                "\\(",
+                "-name", "node_modules",
+                "-o", "-name", ".git",
+                "-o", "-name", "dist",
+                "-o", "-name", "build",
+                "-o", "-name", ".next",
+                "-o", "-name", "coverage",
+                "-o", "-name", ".cache",
+                "-o", "-name", "__pycache__",
+                "\\)",
+                "-prune",
+                "-o",
+                "-type", "f",
+                "-print"
+            ],
+            { cwd: workspace }
+        );
+
+        return stdout;
+    } catch (error) {
+        return error.stdout || `Failed to list files: ${error.message}`;
     }
 }

@@ -1,3 +1,11 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+
+// Create the async version
+const execFileAsync = promisify(execFile);
+
+
+const workspace = process.cwd();
 export const searchTool = {
     type: "function",
     function: {
@@ -17,5 +25,21 @@ export const searchTool = {
             },
             required: ["query"]
         }
+    }
+}
+
+
+export async function searchFiles( {query, path = "."}){
+   
+    try {
+        const { stdout } = await execFileAsync(
+            "grep",
+            ["-R", "-n", query, path],
+            { cwd: workspace }
+        );
+
+        return stdout;
+    } catch (error) {
+        return error.stdout || `Search failed: ${error.message}`;
     }
 }
