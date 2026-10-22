@@ -26,29 +26,22 @@ export const listTool = {
 
 export async function listFiles({ path = "." }) {
     try {
+        if(path == "." || path == ""){
+            console.log(`Exploring ${workspace}`);
+        }
+        else {
+            console.log(`Exploring ${path}`);
+        }
         path = path || ".";
         const { stdout } = await execFileAsync(
-            "find",
-            [
-    path,
-    "-type", "d",
-    "(",
-    "-name", "node_modules",
-    "-o", "-name", ".git",
-    "-o", "-name", "dist",
-    "-o", "-name", "build",
-    "-o", "-name", ".next",
-    "-o", "-name", "coverage",
-    "-o", "-name", ".cache",
-    "-o", "-name", "__pycache__",
-    ")",
-    "-prune",
-    "-o",
-    "-type", "f",
-    "-print"
-],
-            { cwd: workspace }
-        );
+    "find",
+    [
+        path,
+        "-maxdepth", "1",
+        "-mindepth", "1"
+    ],
+    { cwd: workspace }
+);
 
         return stdout;
     } catch (error) {

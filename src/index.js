@@ -1,6 +1,6 @@
 import readline from "readline";
+import '../config.js'
 import { main } from "../agent/loop.js";
-
 
 
 export const messages = [];
@@ -23,7 +23,7 @@ const rl = readline.createInterface({
             return;
         }
 
-        console.log("You said:", input);
+        // console.log("You said:", input);
 
         // Later:
         // await agent.run(input);
@@ -32,7 +32,7 @@ const rl = readline.createInterface({
             role : "user" , 
             content : input
         });
-        console.log(messages);
+        // console.log(messages);
         
         await main();
 

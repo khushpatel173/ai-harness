@@ -24,9 +24,10 @@ const workspace = process.cwd();
 
 export async function readFile({path : location}){
     try {
-    console.log(location);
+    console.log(`Reading ${location}`);
+    // console.log(location);
     const fullPath = path.join(workspace , location);
-    console.log(fullPath);
+    // console.log(fullPath);
     const content = await fs.readFile(fullPath, "utf-8");
     return content;
     } catch (error) {

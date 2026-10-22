@@ -26,7 +26,7 @@ export const writeTool = {
 const workspace = process.cwd();
  export async function writeFile({content , path : location}){
      try {
-        
+        console.log(`Editing ${location}`);
         const fullPath = path.join(workspace, location);
         await fs.writeFile(fullPath, content, "utf-8");
         return `Successfully wrote to ${location}`;

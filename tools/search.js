@@ -32,6 +32,7 @@ export const searchTool = {
 export async function searchFiles( {query, path = "."}){
    
     try {
+        console.log(`Searching for ${query}`);
         const { stdout } = await execFileAsync(
             "grep",
             ["-R", "-n", query, path],

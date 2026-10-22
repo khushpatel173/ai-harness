@@ -28,6 +28,7 @@ export const bashTool = {
 
 export async function runCommand({ command, path : location = "." }) {
     try {
+        console.log(`Running ${command}`);
         const { stdout, stderr } = await execAsync(command, {
             cwd: path.join(workspace, location)
         });
